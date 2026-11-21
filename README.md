@@ -1,5 +1,11 @@
 # Model Regression Detection System
 
+**Automated Search Quality Regression Testing**
+
+The system detects retrieval-quality regressions through reproducible, policy-defined comparisons: a candidate run is
+checked against an approved, SHA-256-pinned baseline under a versioned policy, with exact arithmetic and a fixed
+decision rule. It is a local CLI plus a GitHub Actions demonstration, not a production model-monitoring platform.
+
 A small local CLI (`mrds`) that decides whether a candidate retrieval run is a **regression** against an approved
 baseline. It reads two saved run reports (`run.json`, schema 1.1) from the
 [Retrieval Evaluation Harness](https://github.com/RyanJBush/Retrieval-Evaluation-Harness) (pinned at commit
@@ -106,8 +112,8 @@ the re-derived values; an empty scored set; or a baseline or policy file that do
 Python 3.10+ and git. The commands below were run from a fresh clone of `main` (see the end of this section).
 
 ```bash
-git clone https://github.com/RyanJBush/model-regression-detection-system.git
-cd model-regression-detection-system
+git clone https://github.com/RyanJBush/Model-Regression-Detection-System.git
+cd Model-Regression-Detection-System
 python3 -m mrds --baseline fixtures/synthetic-v1/baseline.run.json --candidate fixtures/synthetic-v1/candidate_boundary.run.json --policy fixtures/synthetic-v1/policy.json --out-dir out/boundary
 python3 -m mrds --baseline fixtures/synthetic-v1/baseline.run.json --candidate fixtures/synthetic-v1/candidate_regression.run.json --policy fixtures/synthetic-v1/policy.json --out-dir out/regression
 python3 -m mrds --baseline fixtures/synthetic-v1/baseline.run.json --candidate fixtures/synthetic-v1/candidate_invalid.run.json --policy fixtures/synthetic-v1/policy.json --out-dir out/invalid
@@ -142,17 +148,19 @@ verification PR copies one synthetic fixture to `candidate/run.json`; the gate r
 pinned hashes from the **PR base commit** and treats the candidate file as data. The check is **advisory**
 (`model-regression-gate` is not a required status check and `main` has no branch protection).
 
-These runs used the hardened gate merged in [#4](https://github.com/RyanJBush/model-regression-detection-system/pull/4)
+These runs used the hardened gate merged in [#4](https://github.com/RyanJBush/Model-Regression-Detection-System/pull/4)
 and stay **unmerged drafts**:
 
 | Outcome | PR | Actions run | Check | Report decision / exit | Artifact |
 |---|---|---|---|---|---|
-| Boundary | [#5](https://github.com/RyanJBush/model-regression-detection-system/pull/5) | [42453419077](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42453419077) | pass | `pass` / 0, delta -1/20 | [13606318412](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42453419077/artifacts/13606318412) |
-| Regression | [#6](https://github.com/RyanJBush/model-regression-detection-system/pull/6) | [42453423731](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42453423731) | fail | `regression_detected` / 1, delta -1/10, q01 -1/5 | [13606891062](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42453423731/artifacts/13606891062) |
-| Invalid | [#7](https://github.com/RyanJBush/model-regression-detection-system/pull/7) | [42453427956](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42453427956) | fail | `comparison_invalid` / 2, q01 missing, no aggregate | [13607165078](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42453427956/artifacts/13607165078) |
+| Boundary | [#5](https://github.com/RyanJBush/Model-Regression-Detection-System/pull/5) | [42453419077](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42453419077) | pass | `pass` / 0, delta -1/20 | [13606318412](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42453419077/artifacts/13606318412) |
+| Regression | [#6](https://github.com/RyanJBush/Model-Regression-Detection-System/pull/6) | [42453423731](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42453423731) | fail | `regression_detected` / 1, delta -1/10, q01 -1/5 | [13606891062](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42453423731/artifacts/13606891062) |
+| Invalid | [#7](https://github.com/RyanJBush/Model-Regression-Detection-System/pull/7) | [42453427956](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42453427956) | fail | `comparison_invalid` / 2, q01 missing, no aggregate | [13607165078](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42453427956/artifacts/13607165078) |
 
 Each artifact holds `report.json`, `report.md`, `console.txt`, `candidate.run.json` and a `reproduce.sh` that rebuilds
-the check from a clean clone (trusted base commit plus the PR head's `candidate/run.json`). The earlier, pre-hardening
+the check from a clean clone (trusted base commit plus the PR head's `candidate/run.json`). These artifacts predate the
+repository rename, so their frozen `reproduce.sh` clones the former URL
+`https://github.com/RyanJBush/model-regression-detection-system.git`; GitHub redirects it to this repository. The earlier, pre-hardening
 runs are PRs #1 to #3; details are in [docs/hosted-demo.md](docs/hosted-demo.md).
 
 ### What the demo does and does not prove
