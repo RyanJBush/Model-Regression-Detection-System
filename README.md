@@ -2,7 +2,7 @@
 
 A small local CLI (`mrds`) that decides whether a candidate retrieval run is a **regression** against an approved
 baseline. It reads two saved run reports (`run.json`, schema 1.1) from the
-[Retrieval Evaluation Harness](https://github.com/RyanJBush/retrieval-eval-harness) (pinned at commit
+[Retrieval Evaluation Harness](https://github.com/RyanJBush/Retrieval-Evaluation-Harness) (pinned at commit
 `5daa6003131c1ce3e11a1673c976c24dac2c80c7`), validates them, compares BM25 Recall@3, and writes a JSON and a
 Markdown report. It has no runtime dependencies beyond Python 3.10+.
 
