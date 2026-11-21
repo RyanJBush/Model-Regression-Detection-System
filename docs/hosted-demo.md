@@ -22,15 +22,21 @@ PRs that only change the gate itself.
 
 ## Verified hosted runs (2026-11-08)
 
-Repository: https://github.com/RyanJBush/model-regression-detection-system. The three PRs are drafts and stay unmerged.
+Repository: https://github.com/RyanJBush/Model-Regression-Detection-System (renamed from
+`RyanJBush/model-regression-detection-system`; GitHub redirects the former URLs, and the run and artifact IDs are
+unchanged). The three PRs are drafts and stay unmerged.
 For each run I checked the PR check conclusion, the `report.json` and `report.md` in the artifact, and the rendered
 job summary (read from the run page while signed in).
 
 | Outcome | PR | Actions run | Check | Report decision / exit | Artifact |
 |---|---|---|---|---|---|
-| Boundary | [#1](https://github.com/RyanJBush/model-regression-detection-system/pull/1) | [42451915288](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42451915288) | pass | `pass` / 0, delta -1/20 (-0.05) | [13606300489](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42451915288/artifacts/13606300489) |
-| Regression | [#2](https://github.com/RyanJBush/model-regression-detection-system/pull/2) | [42451916483](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42451916483) | fail | `regression_detected` / 1, delta -1/10 (-0.10), largest drop q01 (-1/5) | [13606147602](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42451916483/artifacts/13606147602) |
-| Invalid | [#3](https://github.com/RyanJBush/model-regression-detection-system/pull/3) | [42451920708](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42451920708) | fail | `comparison_invalid` / 2, q01 result row missing, no aggregate | [13605259020](https://github.com/RyanJBush/model-regression-detection-system/actions/runs/42451920708/artifacts/13605259020) |
+| Boundary | [#1](https://github.com/RyanJBush/Model-Regression-Detection-System/pull/1) | [42451915288](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42451915288) | pass | `pass` / 0, delta -1/20 (-0.05) | [13606300489](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42451915288/artifacts/13606300489) |
+| Regression | [#2](https://github.com/RyanJBush/Model-Regression-Detection-System/pull/2) | [42451916483](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42451916483) | fail | `regression_detected` / 1, delta -1/10 (-0.10), largest drop q01 (-1/5) | [13606147602](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42451916483/artifacts/13606147602) |
+| Invalid | [#3](https://github.com/RyanJBush/Model-Regression-Detection-System/pull/3) | [42451920708](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42451920708) | fail | `comparison_invalid` / 2, q01 result row missing, no aggregate | [13606400584](https://github.com/RyanJBush/Model-Regression-Detection-System/actions/runs/42451920708/artifacts/13606400584) (see note) |
+
+Note on the invalid row: run 42451920708 was re-run (attempt 2). The attempt-1 artifact originally listed here,
+`13605259020`, no longer exists (the API returns 404). The linked artifact `13606400584` is the attempt-2 artifact of the
+same run; its `report.json` was re-checked on 2026-11-21 and records `comparison_invalid`, exit 2.
 
 Those runs used the gate as of commit `3b2bac9`. Two properties of that version were fixed afterwards and are not
 true of the artifacts above:
